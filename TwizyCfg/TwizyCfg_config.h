@@ -14,7 +14,7 @@
 #define TWIZY_CAN_MCP_FREQ        MCP_16MHZ
 
 // Set your CAN CS pin number here:
-#define TWIZY_CAN_CS_PIN          53
+#define TWIZY_CAN_CS_PIN          9
 
 // Set your CAN IRQ pin here (0 = no IRQ):
 #define TWIZY_CAN_IRQ_PIN         0
