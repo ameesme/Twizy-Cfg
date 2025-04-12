@@ -917,38 +917,25 @@ void setup() {
 
 
 void loop() {
-  
-  if (stringComplete) {
-    
-    // execute command:
-    Serial.println(inputString);
-    exec((char *) inputString.c_str());
-    Serial.print("\n> ");
-    
-    // clear the string:
-    inputString = "";
-    stringComplete = false;
-  }
-  
-}
-
-
-/*
- SerialEvent occurs whenever a new data comes in the
- hardware serial RX.  This routine is run between each
- time loop() runs, so using delay inside loop can delay
- response.  Multiple bytes of data may be available.
- */
-void serialEvent() {
-  
   while (Serial.available()) {
     char inChar = (char)Serial.read();
+
     if (inChar == '\r' || inChar == '\n') {
-      stringComplete = (inputString.length() > 0);
+      if (inputString.length() > 0) {
+        stringComplete = true;
+      }
     }
     else if (inChar >= 32) {
       inputString += inChar;
     }
   }
-  
+  // If input is complete, execute it
+  if (stringComplete) {
+    Serial.println(inputString);               // Echo input
+    exec((char *)inputString.c_str());         // Run the command
+    Serial.print("\n> ");                       // Show new prompt
+    inputString = "";                           // Reset buffer
+    stringComplete = false;
+  }
 }
+
