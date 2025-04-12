@@ -71,8 +71,8 @@ struct cfg_command {
 
 const cfg_command command_table[] PROGMEM = {
   
-  { "?", cmdHelp, modeOffline },
-  { "HELP", cmdHelp, modeOffline },
+  // { "?", cmdHelp, modeOffline },
+  // { "HELP", cmdHelp, modeOffline },
   
   { "READ", cmdRead, modeLogin },
   { "R", cmdRead, modeLogin },
@@ -103,10 +103,10 @@ const cfg_command command_table[] PROGMEM = {
   { "SPEED", cmdSpeed, modePreOp },
   { "POWER", cmdPower, modePreOp },
   { "TSMAP", cmdTSMap, modePreOp },
-  { "BRAKELIGHT", cmdBrakelight, modePreOp },
+  // { "BRAKELIGHT", cmdBrakelight, modePreOp },
   
-  { "DA", cmdDiagAddress, modeOffline },
-  { "DR", cmdDiagRequest, modeOffline },
+  // { "DA", cmdDiagAddress, modeOffline },
+  // { "DR", cmdDiagRequest, modeOffline },
   
 };
 
@@ -152,50 +152,50 @@ bool exec(char *cmdline)
     cmd.mode = modeOffline;
   }
 
-  if (cmd.id == cmdHelp) {
-    Serial.print(F("\n"
-      "Twizy-Cfg " TWIZY_CFG_VERSION "\n"
-      "\n"
-      "Commands:\n"
-      " ?, help                  -- output this info\n"
-      " r <id> <sub>             -- read SDO register (numerical)\n"
-      " rs <id> <sub>            -- read SDO register (string)\n"
-      " w <id> <sub> <val>       -- write SDO register (numerical) & show old value\n"
-      " wo <id> <sub> <val>      -- write-only SDO register (numerical)\n"
-      " p                        -- preop mode\n"
-      " o                        -- op mode\n"
-      "(Hint: standard OVMS syntax also accepted)\n"
-      "\n"
-      " set <prf> <b64>          -- set profile from base64\n"
-      " reset <prf>              -- reset profile\n"
-      " get <prf>                -- get profile base64\n"
-      " info                     -- show main profile values\n"
-      " save <prf>               -- save config to profile\n"
-      " load <prf>               -- load config from profile\n"
-      "\n"
-      " drive <prc>              -- set drive level\n"
-      " recup <ntr> <brk>        -- set recuperation levels neutral & brake\n"
-      " ramps <st> <ac> <dc> <nt> <br> -- set ramp levels\n"
-      " rampl <ac> <dc>          -- set ramp limits\n"
-      " smooth <prc>             -- set smoothing\n"
-      "\n"
-      " speed <max> <warn>       -- set max & warn speed\n"
-      " power <trq> <pw1> <pw2> <cur> -- set torque, power & current levels\n"
-      " tsmap <DNB> <pt1..4>     -- set torque speed maps\n"
-      " brakelight <on> <off>    -- set brakelight accel levels\n"
-      "\n"
-      " da <sendid> <recvid>     -- set OBD2 device address\n"
-      " dr <hexstring>           -- send OBD2 request\n"
-      "\n"
-      "See OVMS manual & command overview for details.\n"
-      "Note: <id> and <sub> are hexadecimal, <val> are decimal\n"
-      "Examples:\n"
-      " rs 1008 0                -- read SEVCON firmware name\n"
-      " w 2920 3 325             -- set neutral recup level to 32.5%\n"
-      "\n"
-      ));
-    return false;
-  }
+  // if (cmd.id == cmdHelp) {
+  //   Serial.print(F("\n"
+  //     "Twizy-Cfg " TWIZY_CFG_VERSION "\n"
+  //     "\n"
+  //     "Commands:\n"
+  //     " ?, help                  -- output this info\n"
+  //     " r <id> <sub>             -- read SDO register (numerical)\n"
+  //     " rs <id> <sub>            -- read SDO register (string)\n"
+  //     " w <id> <sub> <val>       -- write SDO register (numerical) & show old value\n"
+  //     " wo <id> <sub> <val>      -- write-only SDO register (numerical)\n"
+  //     " p                        -- preop mode\n"
+  //     " o                        -- op mode\n"
+  //     "(Hint: standard OVMS syntax also accepted)\n"
+  //     "\n"
+  //     " set <prf> <b64>          -- set profile from base64\n"
+  //     " reset <prf>              -- reset profile\n"
+  //     " get <prf>                -- get profile base64\n"
+  //     " info                     -- show main profile values\n"
+  //     " save <prf>               -- save config to profile\n"
+  //     " load <prf>               -- load config from profile\n"
+  //     "\n"
+  //     " drive <prc>              -- set drive level\n"
+  //     " recup <ntr> <brk>        -- set recuperation levels neutral & brake\n"
+  //     " ramps <st> <ac> <dc> <nt> <br> -- set ramp levels\n"
+  //     " rampl <ac> <dc>          -- set ramp limits\n"
+  //     " smooth <prc>             -- set smoothing\n"
+  //     "\n"
+  //     " speed <max> <warn>       -- set max & warn speed\n"
+  //     " power <trq> <pw1> <pw2> <cur> -- set torque, power & current levels\n"
+  //     " tsmap <DNB> <pt1..4>     -- set torque speed maps\n"
+  //     " brakelight <on> <off>    -- set brakelight accel levels\n"
+  //     "\n"
+  //     " da <sendid> <recvid>     -- set OBD2 device address\n"
+  //     " dr <hexstring>           -- send OBD2 request\n"
+  //     "\n"
+  //     "See OVMS manual & command overview for details.\n"
+  //     "Note: <id> and <sub> are hexadecimal, <val> are decimal\n"
+  //     "Examples:\n"
+  //     " rs 1008 0                -- read SEVCON firmware name\n"
+  //     " w 2920 3 325             -- set neutral recup level to 32.5%\n"
+  //     "\n"
+  //     ));
+  //   return false;
+  // }
 
 
   //
@@ -345,80 +345,80 @@ bool exec(char *cmdline)
       break;
 
 
-    case cmdDiagAddress:
-      // DA tx_id_hex rx_id_hex
-      if (arguments = net_sms_nextarg(arguments))
-        arg[0] = (int)axtoul(arguments);
-      if (arguments = net_sms_nextarg(arguments))
-        arg[1] = (int)axtoul(arguments);
+    // case cmdDiagAddress:
+    //   // DA tx_id_hex rx_id_hex
+    //   if (arguments = net_sms_nextarg(arguments))
+    //     arg[0] = (int)axtoul(arguments);
+    //   if (arguments = net_sms_nextarg(arguments))
+    //     arg[1] = (int)axtoul(arguments);
 
-      if (!arguments) {
-        s = stp_rom(s, "ERROR: Too few args");
-      }
-      else {
-        tpMsg.tx_id = arg[0];
-        tpMsg.rx_id = arg[1];
-        CAN.init_Filt(1, 0, tpMsg.rx_id << 16);
-        s = stp_rom(s, "OK");
-      }
-      go_op_onexit = false;
-      break;
+    //   if (!arguments) {
+    //     s = stp_rom(s, "ERROR: Too few args");
+    //   }
+    //   else {
+    //     tpMsg.tx_id = arg[0];
+    //     tpMsg.rx_id = arg[1];
+    //     CAN.init_Filt(1, 0, tpMsg.rx_id << 16);
+    //     s = stp_rom(s, "OK");
+    //   }
+    //   go_op_onexit = false;
+    //   break;
 
 
-    case cmdDiagRequest:
-      // DR hexstring
-      if (arguments = net_sms_nextarg(arguments)) {
-        if (strlen(arguments) & 1) {
-          // input length is odd:
-          s = stp_rom(s, "ERROR: invalid hex string length");
-        }
-        else {
-          // parse hexstring into scratchpad:
-          t = (char *) net_msg_scratchpad;
-          maps[2] = 0;
-          while (arguments[0]) {
-            maps[0] = arguments[0];
-            maps[1] = arguments[1];
-            *t++ = axtoul(maps);
-            arguments += 2;
-          }
-        }
-      }
+    // case cmdDiagRequest:
+    //   // DR hexstring
+    //   if (arguments = net_sms_nextarg(arguments)) {
+    //     if (strlen(arguments) & 1) {
+    //       // input length is odd:
+    //       s = stp_rom(s, "ERROR: invalid hex string length");
+    //     }
+    //     else {
+    //       // parse hexstring into scratchpad:
+    //       t = (char *) net_msg_scratchpad;
+    //       maps[2] = 0;
+    //       while (arguments[0]) {
+    //         maps[0] = arguments[0];
+    //         maps[1] = arguments[1];
+    //         *t++ = axtoul(maps);
+    //         arguments += 2;
+    //       }
+    //     }
+    //   }
 
-      if (!arguments) {
-        s = stp_rom(s, "ERROR: Too few args");
-      }
-      else {
-        // send request:
-        tpMsg.Buffer = (uint8_t *)net_msg_scratchpad;
-        tpMsg.len = (t - (char *)net_msg_scratchpad);
-        if (err = isotp.send(&tpMsg)) {
-          s = stp_i(s, "ERROR: isotp.send error code ", err);
-        }
-        else {
-          // read response into scratchpad:
-          tpMsg.Buffer = (uint8_t *)net_msg_scratchpad;
-          tpMsg.len = 0;
-          isotp.receive(&tpMsg);
-          if (tpMsg.tp_state != ISOTP_FINISHED) {
-            s = stp_i(s, "ERROR: isotp.receive error code ", tpMsg.tp_state);
-          }
-          else {
-            // output response as hexstring:
-            Serial.print(net_scratchpad);
-            net_scratchpad[0] = 0;
-            for (i=0; i<tpMsg.len; i++) {
-              if ((byte)net_msg_scratchpad[i] < 0x10)
-                Serial.print(F("0"));
-              Serial.print((byte)net_msg_scratchpad[i], HEX);
-            }
-            break;
-          }
-        }
-      }
+    //   if (!arguments) {
+    //     s = stp_rom(s, "ERROR: Too few args");
+    //   }
+    //   else {
+    //     // send request:
+    //     tpMsg.Buffer = (uint8_t *)net_msg_scratchpad;
+    //     tpMsg.len = (t - (char *)net_msg_scratchpad);
+    //     if (err = isotp.send(&tpMsg)) {
+    //       s = stp_i(s, "ERROR: isotp.send error code ", err);
+    //     }
+    //     else {
+    //       // read response into scratchpad:
+    //       tpMsg.Buffer = (uint8_t *)net_msg_scratchpad;
+    //       tpMsg.len = 0;
+    //       isotp.receive(&tpMsg);
+    //       if (tpMsg.tp_state != ISOTP_FINISHED) {
+    //         s = stp_i(s, "ERROR: isotp.receive error code ", tpMsg.tp_state);
+    //       }
+    //       else {
+    //         // output response as hexstring:
+    //         Serial.print(net_scratchpad);
+    //         net_scratchpad[0] = 0;
+    //         for (i=0; i<tpMsg.len; i++) {
+    //           if ((byte)net_msg_scratchpad[i] < 0x10)
+    //             Serial.print(F("0"));
+    //           Serial.print((byte)net_msg_scratchpad[i], HEX);
+    //         }
+    //         break;
+    //       }
+    //     }
+    //   }
 
-      go_op_onexit = false;
-      break;
+    //   go_op_onexit = false;
+    //   break;
 
 
     case cmdSet:
@@ -818,30 +818,30 @@ bool exec(char *cmdline)
       break;
 
 
-    case cmdBrakelight:
-      // BRAKELIGHT [on_lev] [off_lev]
+    // case cmdBrakelight:
+    //   // BRAKELIGHT [on_lev] [off_lev]
 
-      if (arguments = net_sms_nextarg(arguments))
-        arg[0] = atoi(arguments);
+    //   if (arguments = net_sms_nextarg(arguments))
+    //     arg[0] = atoi(arguments);
 
-      if (arguments = net_sms_nextarg(arguments))
-        arg[1] = atoi(arguments);
-      else
-        arg[1] = arg[0];
+    //   if (arguments = net_sms_nextarg(arguments))
+    //     arg[1] = atoi(arguments);
+    //   else
+    //     arg[1] = arg[0];
 
-      if (err = vehicle_twizy_cfg_brakelight(arg[0], arg[1])) {
-        s = vehicle_twizy_fmt_err(s, err);
-      }
-      else {
-        // update profile:
-        twizy_cfg_profile.brakelight_on = cfgvalue(arg[0]);
-        twizy_cfg_profile.brakelight_off = cfgvalue(arg[1]);
-        twizy_cfg.unsaved = 1;
+    //   if (err = vehicle_twizy_cfg_brakelight(arg[0], arg[1])) {
+    //     s = vehicle_twizy_fmt_err(s, err);
+    //   }
+    //   else {
+    //     // update profile:
+    //     twizy_cfg_profile.brakelight_on = cfgvalue(arg[0]);
+    //     twizy_cfg_profile.brakelight_off = cfgvalue(arg[1]);
+    //     twizy_cfg.unsaved = 1;
 
-        // success message:
-        s = stp_rom(s, "OK");
-      }
-      break;
+    //     // success message:
+    //     s = stp_rom(s, "OK");
+    //   }
+    //   break;
 
 
     default:
@@ -875,7 +875,7 @@ boolean stringComplete = false;  // whether the string is complete
 
 void setup() {
   
-  Serial.begin(1000000);
+  Serial.begin(115200);
   while (!Serial) {
     ; // wait for serial port to connect. Needed for native USB port only
   }
